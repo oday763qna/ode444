@@ -3,43 +3,80 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OD احسبها صح</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>OD احسبها صح | OD Calculate It Right</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="OD احسبها صح - Smart Financial Decisions" />
+    <meta name="description" content="A bilingual financial utility app by Oday Qutqut. Loan evaluation, bill splitting, budget tracking, and general calculations." />
+    <meta name="theme-color" content="#10b981" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://od-calculate.vercel.app/" />
+    <meta property="og:title" content="OD احسبها صح - Smart Financial Decisions" />
+    <meta property="og:description" content="Calculate loans, split bills, and manage your budget with ease. Fully offline and bilingual." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/lucide-react/lucide/main/icons/calculator.svg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="OD احسبها صح" />
+    <meta property="twitter:description" content="Professional financial calculators in your pocket." />
+
+    <!-- PWA / Mobile -->
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
       body {
         font-family: 'Inter', 'Cairo', sans-serif;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+        -webkit-tap-highlight-color: transparent;
       }
       .font-arabic {
         font-family: 'Cairo', sans-serif;
       }
-      /* Custom focus styles */
-      :focus-visible {
-        outline: 2px solid #3b82f6;
-        outline-offset: 2px;
+      /* Smooth transitions for theme switching */
+      * {
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+      }
+      /* Optimized Scrollbar */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "recharts": "https://esm.sh/recharts@^3.7.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.34.0"
-  }
-}
-</script>
-</head>
-  <body class="bg-slate-50 text-slate-900 transition-colors duration-300">
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "recharts": "https://esm.sh/recharts@^3.7.0",
+        "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
+        "framer-motion": "https://esm.sh/framer-motion@^12.34.0"
+      }
+    }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
