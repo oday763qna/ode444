@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Calculator, Users, Wallet, PiggyBank, Sparkles, TrendingUp, Lightbulb, Grid } from 'lucide-react';
+import { Calculator, Users, Wallet, PiggyBank, Sparkles, TrendingUp, Lightbulb, Grid, Dices, BarChart3 } from 'lucide-react';
 import { useAppContext } from '../App';
 import { TIPS } from '../constants';
 
 const HomePage: React.FC = () => {
-  const { t, theme, expenses, lang } = useAppContext();
+  const { t, theme, expenses, currency } = useAppContext();
   const [tip, setTip] = useState({ en: "", ar: "" });
 
   useEffect(() => {
@@ -17,19 +17,21 @@ const HomePage: React.FC = () => {
   const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   const menuItems = [
-    { path: '/loan', icon: <Calculator size={28} />, label: t('loanCalc'), color: 'emerald', sub: 'evaluate deals' },
-    { path: '/bill', icon: <Users size={28} />, label: t('billSplit'), color: 'blue', sub: 'split with friends' },
-    { path: '/budget', icon: <Wallet size={28} />, label: t('budget'), color: 'orange', sub: 'track expenses' },
-    { path: '/savings', icon: <PiggyBank size={28} />, label: t('savings'), color: 'purple', sub: 'plan goals' },
-    { path: '/general', icon: <Grid size={28} />, label: t('generalCalc'), color: 'amber', sub: 'commission, trade, etc.' },
+    { path: '/advanced-planner', icon: <TrendingUp size={28} />, label: t('advancedPlanner'), color: 'blue', sub: 'توزيع ذكي وتوقعات النمو' },
+    { path: '/budget', icon: <Wallet size={28} />, label: t('budget'), color: 'orange', sub: 'راقب مصاريفك اليومية' },
+    { path: '/savings', icon: <PiggyBank size={28} />, label: t('savings'), color: 'purple', sub: 'خطط لمستقبلك المالي' },
+    { path: '/loan', icon: <Calculator size={28} />, label: t('loanCalc'), color: 'emerald', sub: 'قيم صفقاتك بدقة' },
+    { path: '/bill', icon: <Users size={28} />, label: t('billSplit'), color: 'blue', sub: 'قسم التكاليف مع أصدقائك' },
+    { path: '/wheel', icon: <Dices size={28} />, label: t('wheelGame'), color: 'pink', sub: 'دولاب الحظ للدفع' },
+    { path: '/general', icon: <Grid size={28} />, label: t('generalCalc'), color: 'amber', sub: 'عمولات، تجارة، والمزيد' },
   ];
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-20 text-right">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-500 to-blue-600 bg-clip-text text-transparent">{t('tagline')}</h2>
-          <p className="text-xs opacity-50 font-medium">Manage your money like a pro</p>
+          <p className="text-xs opacity-50 font-medium">أدر أموالك كالمحترفين</p>
         </div>
         <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500">
           <Sparkles size={20} className="animate-pulse" />
@@ -41,7 +43,7 @@ const HomePage: React.FC = () => {
         <div className="p-2 bg-white/20 rounded-xl"><Lightbulb size={24} /></div>
         <div className="flex-1">
           <h4 className="text-[10px] font-black uppercase tracking-widest mb-1">{t('tipOfDay')}</h4>
-          <p className="text-sm font-bold leading-tight">{lang === 'ar' ? tip.ar : tip.en}</p>
+          <p className="text-sm font-bold leading-tight">{tip.ar}</p>
         </div>
       </motion.div>
 
@@ -49,21 +51,22 @@ const HomePage: React.FC = () => {
       <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className={`p-5 rounded-3xl border ${theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-200 shadow-sm'} flex items-center gap-4`}>
         <div className="p-3 rounded-2xl bg-emerald-500/20 text-emerald-500"><TrendingUp size={24} /></div>
         <div>
-          <h4 className="text-sm font-bold opacity-70">Recent Activity</h4>
-          <p className="text-lg font-black">{totalSpent > 0 ? `${totalSpent.toLocaleString()} Spent` : 'No expenses logged yet'}</p>
+          <h4 className="text-sm font-bold opacity-70">النشاط الأخير</h4>
+          <p className="text-lg font-black">{totalSpent > 0 ? `${totalSpent.toLocaleString()} ${currency} تم صرفها` : 'لا توجد مصاريف مسجلة بعد'}</p>
         </div>
       </motion.div>
 
       {/* Main Grid */}
       <div className="grid grid-cols-2 gap-4">
         {menuItems.map((item, idx) => (
-          <motion.div key={item.path} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * idx }} className={idx === 4 ? "col-span-2" : ""}>
+          <motion.div key={item.path} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * idx }} className={idx === 0 ? "col-span-2" : ""}>
             <Link to={item.path} className={`group block p-5 rounded-3xl border transition-all duration-300 relative overflow-hidden h-full ${theme === 'dark' ? 'bg-slate-800 border-slate-700 hover:border-emerald-500/50' : 'bg-white border-slate-200 shadow-sm hover:shadow-md'}`}>
               <div className={`p-3 rounded-2xl w-fit mb-4 transition-transform group-hover:scale-110 ${
                 item.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-500' :
                 item.color === 'blue' ? 'bg-blue-500/10 text-blue-500' :
                 item.color === 'orange' ? 'bg-orange-500/10 text-orange-500' :
                 item.color === 'purple' ? 'bg-purple-500/10 text-purple-500' :
+                item.color === 'pink' ? 'bg-pink-500/10 text-pink-500' :
                 'bg-amber-500/10 text-amber-500'
               }`}>
                 {item.icon}
@@ -74,15 +77,6 @@ const HomePage: React.FC = () => {
           </motion.div>
         ))}
       </div>
-
-      {/* Simulated Banner Ad */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className={`p-3 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center min-h-[100px] ${theme === 'dark' ? 'border-slate-800 bg-slate-800/30' : 'border-slate-100 bg-slate-50'}`}>
-        <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Advertisement</span>
-        <div className="flex items-center gap-3 opacity-30">
-          <Calculator size={32} />
-          <div className="w-32 h-2 bg-slate-300 rounded-full" />
-        </div>
-      </motion.div>
     </div>
   );
 };

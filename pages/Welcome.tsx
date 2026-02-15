@@ -5,34 +5,35 @@ import { Calculator, Users, Wallet, PiggyBank, Globe, Coins, ArrowRight, CheckCi
 import { useAppContext } from '../App';
 
 const WelcomePage: React.FC = () => {
-  const { t, lang, setLang, currency, setCurrency, finishOnboarding, theme } = useAppContext();
+  const { t, currency, setCurrency, finishOnboarding, theme } = useAppContext();
   const [step, setStep] = useState(0);
 
   const features = [
-    { icon: <Calculator size={48} />, text: t('onboarding1'), color: 'emerald' },
-    { icon: <Users size={48} />, text: t('onboarding2'), color: 'blue' },
-    { icon: <Wallet size={48} />, text: t('onboarding3'), color: 'orange' },
-    { icon: <PiggyBank size={48} />, text: t('onboarding4'), color: 'purple' },
+    { icon: <Calculator size={48} />, text: 'تقييم القروض وفحص الفائدة', color: 'emerald' },
+    { icon: <Users size={48} />, text: 'تقسيم الفواتير مع الأصدقاء', color: 'blue' },
+    { icon: <Wallet size={48} />, text: 'تتبع الميزانية والمصاريف', color: 'orange' },
+    { icon: <PiggyBank size={48} />, text: 'التخطيط للأهداف والادخار', color: 'purple' },
   ];
 
   const currencies = ["USD", "EUR", "GBP", "AED", "SAR", "JD", "EGP", "KWD"];
 
   const next = () => {
+    // Step 0: Features, Step 1: Currency, Step 2: Welcome
     if (step < 2) setStep(step + 1);
     else finishOnboarding();
   };
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center p-6 text-center overflow-hidden ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+    <div className={`min-h-screen flex flex-col items-center justify-center p-6 text-center overflow-hidden ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900'}`} dir="rtl">
       <AnimatePresence mode="wait">
         {step === 0 && (
-          <motion.div key="features" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8 w-full max-w-sm">
+          <motion.div key="features" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="space-y-8 w-full max-w-sm">
             <h2 className="text-3xl font-black bg-gradient-to-r from-emerald-500 to-blue-600 bg-clip-text text-transparent">
               {t('appName')}
             </h2>
-            <div className="space-y-6 text-left" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+            <div className="space-y-6 text-right">
               {features.map((f, i) => (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} key={i} className="flex items-center gap-4">
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} key={i} className="flex items-center gap-4">
                   <div className={`p-3 rounded-2xl ${
                     f.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-500' :
                     f.color === 'blue' ? 'bg-blue-500/10 text-blue-500' :
@@ -49,23 +50,12 @@ const WelcomePage: React.FC = () => {
         )}
 
         {step === 1 && (
-          <motion.div key="config" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8 w-full max-w-sm">
+          <motion.div key="config" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-8 w-full max-w-sm">
             <div className="space-y-6">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 justify-center text-emerald-500">
-                  <Globe size={20} />
-                  <h3 className="font-bold">{t('chooseLang')}</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-3 bg-white dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700">
-                  <button onClick={() => setLang('en')} className={`py-3 rounded-xl font-bold transition-all ${lang === 'en' ? 'bg-emerald-500 text-white shadow-lg' : 'opacity-40'}`}>English</button>
-                  <button onClick={() => setLang('ar')} className={`py-3 rounded-xl font-bold transition-all font-arabic ${lang === 'ar' ? 'bg-emerald-500 text-white shadow-lg' : 'opacity-40'}`}>العربية</button>
-                </div>
-              </div>
-
               <div className="space-y-3">
                 <div className="flex items-center gap-2 justify-center text-blue-500">
                   <Coins size={20} />
-                  <h3 className="font-bold">{t('chooseCurrency')}</h3>
+                  <h3 className="font-bold">اختر العملة الافتراضية</h3>
                 </div>
                 <div className="grid grid-cols-4 gap-2">
                   {currencies.map(c => (
@@ -93,8 +83,8 @@ const WelcomePage: React.FC = () => {
       </AnimatePresence>
 
       <motion.button whileTap={{ scale: 0.95 }} onClick={next} className="mt-12 w-full max-w-sm py-4 bg-gradient-to-r from-emerald-500 to-blue-600 text-white rounded-2xl font-bold shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2">
-        {step === 2 ? t('getStarted') : (lang === 'ar' ? 'متابعة' : 'Continue')}
-        <ArrowRight size={20} className={lang === 'ar' ? 'rotate-180' : ''} />
+        {step === 2 ? t('getStarted') : 'متابعة'}
+        <ArrowRight size={20} className="rotate-180" />
       </motion.button>
     </div>
   );

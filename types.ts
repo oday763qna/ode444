@@ -9,11 +9,21 @@ export interface Translations {
   };
 }
 
+export interface IncomeEntry {
+  id: string;
+  name: string;
+  amount: number;
+  date: string;
+}
+
+// Added optional notes property to ExpenseEntry to support detailed tracking in BudgetTracker
 export interface ExpenseEntry {
   id: string;
+  name: string;
   category: string;
   amount: number;
   date: string;
+  notes?: string;
 }
 
 export interface SavingsGoal {
@@ -21,6 +31,7 @@ export interface SavingsGoal {
   name: string;
   target: number;
   current: number;
+  monthlyContribution: number;
   deadline?: string;
 }
 
