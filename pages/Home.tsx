@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Calculator, Users, Wallet, PiggyBank, Sparkles, TrendingUp, Lightbulb, Grid, Dices, BarChart3 } from 'lucide-react';
+import { Calculator, Users, Wallet, PiggyBank, Sparkles, TrendingUp, Lightbulb, Grid, Dices, BarChart3, Zap, Clock, RefreshCw } from 'lucide-react';
 import { useAppContext } from '../App';
 import { TIPS } from '../constants';
 
@@ -17,13 +17,16 @@ const HomePage: React.FC = () => {
   const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   const menuItems = [
-    { path: '/advanced-planner', icon: <TrendingUp size={28} />, label: t('advancedPlanner'), color: 'blue', sub: 'توزيع ذكي وتوقعات النمو' },
+    { path: '/live-converter', icon: <RefreshCw size={28} />, label: t('liveConverter'), color: 'emerald', sub: 'أسعار العملات، الذهب، النفط، والبيتكوين' },
+    { path: '/hidden-cost', icon: <Clock size={28} />, label: t('hiddenCostAnalyzer'), color: 'orange', sub: 'حلل تكلفة المشتريات والوقت الضائع' },
+    { path: '/future-simulator', icon: <Zap size={28} />, label: t('futureSimulator'), color: 'blue', sub: 'محاكاة لـ 6 أشهر وكشف التكاليف الثابتة' },
+    { path: '/advanced-planner', icon: <TrendingUp size={28} />, label: t('advancedPlanner'), color: 'purple', sub: 'توزيع ذكي وتوقعات النمو' },
     { path: '/budget', icon: <Wallet size={28} />, label: t('budget'), color: 'orange', sub: 'راقب مصاريفك اليومية' },
-    { path: '/savings', icon: <PiggyBank size={28} />, label: t('savings'), color: 'purple', sub: 'خطط لمستقبلك المالي' },
-    { path: '/loan', icon: <Calculator size={28} />, label: t('loanCalc'), color: 'emerald', sub: 'قيم صفقاتك بدقة' },
+    { path: '/savings', icon: <PiggyBank size={28} />, label: t('savings'), color: 'emerald', sub: 'خطط لمستقبلك المالي' },
+    { path: '/loan', icon: <Calculator size={28} />, label: t('loanCalc'), color: 'pink', sub: 'قيم صفقاتك بدقة' },
     { path: '/bill', icon: <Users size={28} />, label: t('billSplit'), color: 'blue', sub: 'قسم التكاليف مع أصدقائك' },
-    { path: '/wheel', icon: <Dices size={28} />, label: t('wheelGame'), color: 'pink', sub: 'دولاب الحظ للدفع' },
-    { path: '/general', icon: <Grid size={28} />, label: t('generalCalc'), color: 'amber', sub: 'عمولات، تجارة، والمزيد' },
+    { path: '/wheel', icon: <Dices size={28} />, label: t('wheelGame'), color: 'amber', sub: 'دولاب الحظ للدفع' },
+    { path: '/general', icon: <Grid size={28} />, label: t('generalCalc'), color: 'slate', sub: 'عمولات، تجارة، والمزيد' },
   ];
 
   return (
@@ -41,7 +44,7 @@ const HomePage: React.FC = () => {
       {/* Tip of the Day Card */}
       <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className={`p-5 rounded-3xl border flex items-center gap-4 ${theme === 'dark' ? 'bg-amber-500/10 border-amber-500/20 text-amber-200' : 'bg-amber-50 border-amber-100 text-amber-800'}`}>
         <div className="p-2 bg-white/20 rounded-xl"><Lightbulb size={24} /></div>
-        <div className="flex-1">
+        <div className="flex-1 text-right">
           <h4 className="text-[10px] font-black uppercase tracking-widest mb-1">{t('tipOfDay')}</h4>
           <p className="text-sm font-bold leading-tight">{tip.ar}</p>
         </div>
@@ -50,7 +53,7 @@ const HomePage: React.FC = () => {
       {/* Quick Summary Card */}
       <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className={`p-5 rounded-3xl border ${theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-200 shadow-sm'} flex items-center gap-4`}>
         <div className="p-3 rounded-2xl bg-emerald-500/20 text-emerald-500"><TrendingUp size={24} /></div>
-        <div>
+        <div className="text-right flex-1">
           <h4 className="text-sm font-bold opacity-70">النشاط الأخير</h4>
           <p className="text-lg font-black">{totalSpent > 0 ? `${totalSpent.toLocaleString()} ${currency} تم صرفها` : 'لا توجد مصاريف مسجلة بعد'}</p>
         </div>

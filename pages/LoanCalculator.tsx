@@ -1,8 +1,8 @@
 
 import React, { useState, useMemo } from 'react';
-// Import AnimatePresence from framer-motion
 import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { Share2 } from 'lucide-react';
 import { useAppContext, toEnglishDigits } from '../App';
 
 const LoanCalculatorPage: React.FC = () => {
@@ -46,6 +46,40 @@ const LoanCalculatorPage: React.FC = () => {
     };
   }, [inputs, threshold]);
 
+  const handleShare = async () => {
+    if (!results) return;
+
+    const summaryText = `
+📊 ${t('loanCalc')} - ${t('appName')}
+---------------------------
+💰 ${t('price')}: ${results.price.toLocaleString()} ${currency}
+💳 ${t('totalPaid')}: ${results.totalPaid.toLocaleString()} ${currency}
+📈 ${t('interest')}: ${results.interest.toLocaleString()} ${currency} (${results.interestPercentage.toFixed(1)}%)
+⭐ ${t('status') || 'التقييم'}: ${t(results.status)}
+
+حمل تطبيق OD احسبها صح لاتخاذ قرارات مالية أذكى!
+    `.trim();
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: t('appName'),
+          text: summaryText,
+        });
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      try {
+        await navigator.clipboard.writeText(summaryText);
+        alert(lang === 'ar' ? "تم نسخ ملخص القرض إلى الحافظة!" : "Loan summary copied to clipboard!");
+      } catch (err) {
+        console.error("Clipboard error:", err);
+      }
+    }
+  };
+
   const chartData = results ? [
     { name: t('price'), value: results.price, color: '#10b981' },
     { name: t('interest'), value: Math.max(0, results.interest), color: '#ef4444' },
@@ -70,7 +104,7 @@ const LoanCalculatorPage: React.FC = () => {
               value={inputs.price} 
               onChange={handleChange}
               className={`w-full p-4 rounded-2xl border focus:ring-2 focus:ring-emerald-500 outline-none transition-all ${theme === 'dark' ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200'}`}
-              placeholder={t('placeholderPrice')}
+              placeholder="0.00"
             />
           </div>
           <div className="space-y-2">
@@ -82,7 +116,7 @@ const LoanCalculatorPage: React.FC = () => {
               value={inputs.downPayment} 
               onChange={handleChange}
               className={`w-full p-4 rounded-2xl border focus:ring-2 focus:ring-emerald-500 outline-none transition-all ${theme === 'dark' ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200'}`}
-              placeholder={t('placeholderDown')}
+              placeholder="0.00"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -95,7 +129,7 @@ const LoanCalculatorPage: React.FC = () => {
                 value={inputs.monthly} 
                 onChange={handleChange}
                 className={`w-full p-4 rounded-2xl border focus:ring-2 focus:ring-emerald-500 outline-none transition-all ${theme === 'dark' ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200'}`}
-                placeholder={t('placeholderInstallment')}
+                placeholder="0.00"
               />
             </div>
             <div className="space-y-2">
@@ -107,7 +141,7 @@ const LoanCalculatorPage: React.FC = () => {
                 value={inputs.months} 
                 onChange={handleChange}
                 className={`w-full p-4 rounded-2xl border focus:ring-2 focus:ring-emerald-500 outline-none transition-all ${theme === 'dark' ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200'}`}
-                placeholder={t('placeholderMonths')}
+                placeholder="0"
               />
             </div>
           </div>
@@ -121,6 +155,14 @@ const LoanCalculatorPage: React.FC = () => {
               results.status === 'acceptable' ? 'bg-amber-500/10 border-amber-500/20' :
               'bg-red-500/10 border-red-500/20'
             }`}>
+              {/* Share Button */}
+              <button 
+                onClick={handleShare}
+                className="absolute top-4 left-4 p-2.5 bg-white/50 dark:bg-slate-800/50 rounded-2xl hover:bg-emerald-500 hover:text-white transition-all shadow-sm active:scale-95 z-10"
+              >
+                <Share2 size={20} />
+              </button>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs uppercase tracking-wider opacity-60 font-bold">{t('totalPaid')}</p>

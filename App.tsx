@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo, createContext, useContext } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home as HomeIcon, Calculator, Users, Wallet, PiggyBank, BarChart3, Settings as SettingsIcon, Info, Grid, TrendingUp } from 'lucide-react';
+import { Home as HomeIcon, Calculator, Users, Wallet, PiggyBank, BarChart3, Settings as SettingsIcon, Info, Grid, TrendingUp, Zap, Clock, RefreshCw } from 'lucide-react';
 import { Language, Theme, ExpenseEntry, SavingsGoal, IncomeEntry } from './types';
 import { TRANSLATIONS } from './constants';
 
@@ -18,6 +18,9 @@ import WelcomePage from './pages/Welcome';
 import GeneralCalculationsPage from './pages/GeneralCalculations';
 import WheelGamePage from './pages/WheelGame';
 import AdvancedPlannerPage from './pages/AdvancedPlanner';
+import FutureSimulatorPage from './pages/FutureSimulator';
+import HiddenCostAnalyzer from './pages/HiddenCostAnalyzer';
+import LiveConverterPage from './pages/LiveConverter';
 
 interface AppContextType {
   lang: Language;
@@ -57,7 +60,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navItems = [
     { path: '/', icon: <HomeIcon size={20} />, label: t('home') },
     { path: '/budget', icon: <Wallet size={20} />, label: t('budget') },
-    { path: '/advanced-planner', icon: <TrendingUp size={20} />, label: t('advancedPlanner') },
+    { path: '/live-converter', icon: <RefreshCw size={20} />, label: t('liveConverter') },
     { path: '/reports', icon: <BarChart3 size={20} />, label: t('reports') },
     { path: '/settings', icon: <SettingsIcon size={20} />, label: t('settings') },
   ];
@@ -100,7 +103,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <motion.div whileTap={{ scale: 0.85 }} className={`p-1.5 rounded-lg ${isActive ? (theme === 'dark' ? 'bg-emerald-500/10' : 'bg-emerald-50') : ''}`}>
                   {item.icon}
                 </motion.div>
-                <span className="text-[10px] font-bold uppercase tracking-tight">{item.label}</span>
+                <span className="text-[10px] font-bold uppercase tracking-tight text-center px-1">{item.label}</span>
                 {isActive && <motion.div layoutId="navDot" className="absolute -bottom-1 w-1 h-1 bg-emerald-500 rounded-full" />}
               </Link>
             );
@@ -161,6 +164,9 @@ const App: React.FC = () => {
             <Route path="/general" element={<GeneralCalculationsPage />} />
             <Route path="/wheel" element={<WheelGamePage />} />
             <Route path="/advanced-planner" element={<AdvancedPlannerPage />} />
+            <Route path="/future-simulator" element={<FutureSimulatorPage />} />
+            <Route path="/hidden-cost" element={<HiddenCostAnalyzer />} />
+            <Route path="/live-converter" element={<LiveConverterPage />} />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>

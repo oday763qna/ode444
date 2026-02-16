@@ -16,7 +16,6 @@ export interface IncomeEntry {
   date: string;
 }
 
-// Added optional notes property to ExpenseEntry to support detailed tracking in BudgetTracker
 export interface ExpenseEntry {
   id: string;
   name: string;
@@ -24,6 +23,23 @@ export interface ExpenseEntry {
   amount: number;
   date: string;
   notes?: string;
+  hiddenCostData?: HiddenCostData;
+}
+
+export interface HiddenCostData {
+  yearlyMaintenance: number;
+  monthlySubscription: number;
+  lifespanYears: number;
+  isRecurringConfirmed: boolean;
+}
+
+export interface RegretRecord {
+  expenseId: string;
+  expenseName: string;
+  category: string;
+  date: string;
+  regretStatus: 'regret' | 'happy' | null;
+  notified: boolean;
 }
 
 export interface SavingsGoal {
@@ -39,4 +55,34 @@ export interface BillParticipant {
   id: string;
   name: string;
   paid: number;
+}
+
+// Converter Types
+export interface MarketRate {
+  code: string;
+  rate: number; // Against USD
+  type: 'currency' | 'commodity' | 'crypto';
+  nameAr: string;
+  nameEn: string;
+  icon?: string;
+}
+
+export interface PricePoint {
+  date: string;
+  price: number;
+}
+
+// Simulation Types
+export interface SimulationPoint {
+  month: string;
+  baseline: number;
+  frugal: number;
+  inflated: number;
+}
+
+export interface RecurringDetection {
+  category: string;
+  avgAmount: number;
+  count: number;
+  isRecurring: boolean;
 }
