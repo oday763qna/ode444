@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
+import { Mail, Instagram, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
 import { useAppContext } from '../App';
 
 const AboutUsPage: React.FC = () => {
@@ -43,6 +43,23 @@ const AboutUsPage: React.FC = () => {
                 <Mail size={18} />
               </div>
               <span className="font-medium">oday5qutqut@gmail.com</span>
+            </div>
+            <ExternalLink size={16} className="opacity-30" />
+          </a>
+
+          <a 
+            href="https://www.instagram.com/od0ahsbha0sh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
+              theme === 'dark' ? 'bg-slate-900 border-slate-800 hover:border-pink-500' : 'bg-slate-50 border-slate-100 hover:border-pink-500'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-pink-500/10 text-pink-500 rounded-lg">
+                <Instagram size={18} />
+              </div>
+              <span className="font-medium">@od0ahsbha0sh</span>
             </div>
             <ExternalLink size={16} className="opacity-30" />
           </a>
